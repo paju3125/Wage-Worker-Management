@@ -1,0 +1,8 @@
+.vscode/
+settings.py
+*.csv
+__pycache__/
+
+migrations/
+
+vendor/

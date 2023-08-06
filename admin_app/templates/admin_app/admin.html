@@ -1,0 +1,889 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <title>Admin Dashboard</title>
+
+    <!-- Favicons -->
+    <link href="{% static 'admin_app/img/user.svg' %}" rel="icon" />
+    <link href="{% static 'admin_app/img/user.svg' %}" rel="apple-touch-icon" />
+
+    <!-- Vendors CSS File -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link href="{% static 'admin_app/vendor/icofont/icofont.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'admin_app/vendor/aos/aos.css' %}" rel="stylesheet" />
+    <link href="{% static 'admin_app/vendor/fontawesome/css/all.css' %}" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'admin_app/css/tp.css' %}" rel="stylesheet" />
+    <link href="{% static 'admin_app/css/admin.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- ======= Horizontal Navigation Bar ======= -->
+    <header id="header" class="fixed-top">
+        <button class="add-new-user my-auto ml-5" data-aos="fade-left" data-aos-delay="50">
+        <i class="icofont-plus"></i> Add New User
+      </button>
+        <button class="add-new-dept my-auto ml-5 d-none" data-aos="fade-left" data-aos-delay="50">
+        <i class="icofont-plus"></i> Add New Department
+      </button>
+
+        <nav class="nav-menu">
+            <div data-aos="fade-left mt-2">
+                <ul class="mt-3 mr-5">
+                    <li class="profile-dropdown">
+                        <a>
+                            <img src="{% static 'admin_app/img/user.svg' %}" data-aos="zoom-out" data-aos-delay="300" />
+                            <span class="mt-2">{{loggedUser}}</span>
+                        </a>
+
+                        <div class="userprofile">
+                            <ul>
+                                <li>
+                                    <img src="{% static 'admin_app/img/user.svg' %}" class="m-auto" />
+                                </li>
+                                <li>
+                                    <h4 class="m-auto">{{loggedUser}}</h4>
+                                </li>
+                                <li>
+                                    <button class="logout m-auto" onclick="location.href = '/logout'">
+                      <i class="icofont-logout"></i> Logout
+                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- ======= Horizontal Navigation Bar end ======= -->
+
+    <!-- ======= Vertical Navigation Bar ======= -->
+    <aside class="main-sidebar">
+        <section class="sidebar" data-aos="fade-right">
+            <div id="logo" class="logo">
+                <h3>WMS</h3>
+            </div>
+            <div class="divider"></div>
+            <div class="user-panel">
+                <img src="{% static 'admin_app/img/user.svg' %}" alt="Admin Profile" />
+                <div class="info">
+                    <h3>{{loggedUser}}</h3>
+                    <p data-aos="fade-left" data-aos-delay="300">
+                        <i class="fas fa-check-circle"></i>{{loggedUser}}
+                    </p>
+                </div>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li class="header">MAIN NAVIGATION</li>
+                <li class="active"><a>Home</a></li>
+                <li><a>Departments</a></li>
+            </ul>
+        </section>
+    </aside>
+    <!-- ======= Vertical Navigation Bar ======= -->
+
+    <!-- ======= Department Section ======= -->
+    <section id="department" class="services d-none">
+        <h2 class="heading ml-4" data-aos="fade-right">Departments</h2>
+        <div class="row">
+            <div class="col-8 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Department Table</h4>
+                        <p class="card-description"> All departments
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Department ID</th>
+                                        <th>Department Name</th>
+                                        <th>Created</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for department in departments %}
+                                    <tr>
+                                        <td>{{department.id}}</td>
+                                        <td>{{department.dept_name}}</td>
+                                        <td>{{department.create_date}}</td>
+                                        <td><button class="delete-dept badge badge-outline-success1">
+                                            <i class="icofont-trash"></i>
+                                          </button> </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======= Add new department form ======= -->
+        <form method="post" action="adddept/" class="forms-sample mt-3 d-none" id="ADForm" name="ADForm" autocomplete="off">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="deptName" class="form-control" id="deptName" />
+            </div>
+        </form>
+        <!-- ======= Add new department form end ======= -->
+
+        <!-- ======= Delete department form ======= -->
+        <form method="post" action="deletedept/" class="forms-sample mt-3 d-none" id="DDForm" name="DDForm" autocomplete="off">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="deptName" class="form-control" id="deptName" />
+            </div>
+        </form>
+        <!-- ======= Delete department form end ======= -->
+
+        <!-- To add new department -->
+        <section class="overlay-dept-form d-none">
+            <div class="row justify-content-center">
+                <div class="col-md-4 grid-margin stretch-card">
+                    <div id="add-dept-form" class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Add department form</h4>
+                            <p class="card-description"> Add new department </p>
+                            <form class="forms-sample my-3">
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Department name</label>
+                                    <input type="text" class="form-control" id="dept-name" placeholder="Department">
+                                </div>
+                                <button type="submit" class="btn btn-primary me-2 add-dept-btn">Submit</button>
+                                <button class="btn btn-dark cancel-dept-btn">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- To remove department -->
+        <section class="overlay-delete-dept d-none">
+            <!-- ======= Choice ======= -->
+            <div class="choice-con row justify-content-center">
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Delete Department</h4>
+                            <h4>Confirm delete department '<strong class="text-danger"></strong>'</h4>
+                            <p class="card-description">
+                                The current department's data will be lost
+                            </p>
+                            <div class="choices-delete mt-5 row justify-content-around">
+                                <button class="confirm-delete col-3 btn btn-success">
+                    Confirm
+                  </button>
+                                <button class="cancel-delete col-3 btn btn-outline-danger">
+                    Cancel
+                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ======= Choice ======= -->
+
+
+        </section>
+    </section>
+    <!-- ======= Department Section End ======= -->
+
+
+    <!-- ======= Home Section ======= -->
+    <section id="admin-home" class="services">
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="font-size: 1.2rem;">
+            <strong>Message! </strong> {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width:2rem;height:2rem;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        {% endfor %}
+
+
+        <h2 class="heading ml-4" data-aos="fade-right">Dashboard</h2>
+        <div class="row mx-1" data-aos="fade-right">
+            <div class="col-xl-5 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="d-flex align-items-center align-self-start">
+                                    <h3 class="mb-0"> Number of users</h3>
+
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="icon icon-box-success ">
+                                    <span class="mdi mdi-arrow-top-right icon-item"> {{no_users.users}} </span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-success ml-2 mb-0 font-weight-medium">Admin | Planthead | Supervisor | Security</p>
+                        <!-- <h6 class="text-muted font-weight-normal">Number of users</h6> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-5 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="d-flex align-items-center align-self-start">
+                                    <h3 class="mb-0">Number of departments</h3>
+                                    <p class="text-success ml-2 mb-0 font-weight-medium"></p>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="icon icon-box-success">
+                                    <span class="mdi mdi-arrow-top-right icon-item"> {{no_users.depts}} </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row mx-1" data-aos="fade-left">
+            <div class="col-xl-3 col-md-3 col-sm-2 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="d-flex align-items-center align-self-start">
+                                    <h3 class="mb-0">Admin</h3>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="icon icon-box-light ">
+                                    <span class="mdi mdi-arrow-top-right icon-item"> {{no_users.admins}} </span>
+                                </div>
+                            </div>
+                        </div>
+                        <h6 class="text-muted font-weight-normal">Number of admin</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-3 col-sm-2 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="d-flex align-items-center align-self-start">
+                                    <h3 class="mb-0">User</h3>
+                                    <p class="text-primary ml-2 mb-0 font-weight-medium">Plant head</p>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="icon icon-box-primary ">
+                                    <span class="mdi mdi-arrow-top-right icon-item"> {{no_users.planthead}} </span>
+                                </div>
+                            </div>
+                        </div>
+                        <h6 class="text-muted font-weight-normal">Number of planthead</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-3 col-sm-2 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="d-flex align-items-center align-self-start">
+                                    <h3 class="mb-0">User</h3>
+                                    <p class="text-warning ml-2 mb-0 font-weight-medium">Supervisor</p>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="icon icon-box-warning">
+                                    <span class="mdi mdi-arrow-top-right icon-item"> {{no_users.supervisor}} </span>
+                                </div>
+                            </div>
+                        </div>
+                        <h6 class="text-muted font-weight-normal">Number of Supervisor</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-3 col-sm-2 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="d-flex align-items-center align-self-start">
+                                    <h3 class="mb-0">User</h3>
+                                    <p class="text-info ml-2 mb-0 font-weight-medium">Security</p>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="icon icon-box-info">
+                                    <span class="mdi mdi-arrow-bottom-left icon-item"> {{no_users.security}} </span>
+                                </div>
+                            </div>
+                        </div>
+                        <h6 class="text-muted font-weight-normal">Number of Security</h6>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <h2 class="heading ml-4" data-aos="fade-right">Users</h2>
+        <div class="row ml-2" data-aos="fade-left">
+            <div class="col-10 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Plant Head</h4>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                        <th>Mobile No</th>
+                                        <th>Email ID</th>
+                                        <th>Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %} {% if user.designation == 'Plant head' %}
+                                    <tr>
+                                        <td hidden>{{user.id}}</td>
+                                        <td>
+                                            <span class="pl-2">{{user.name}}</span>
+                                        </td>
+                                        <td>{{user.gender}}</td>
+                                        <td>{{user.mobile}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{user.add_date}}</td>
+                                        <td>
+                                            <button class="edit-form badge badge-outline-success">
+                          <i class="icofont-edit"></i>
+                        </button> {% comment %}
+                                            <div class="badge badge-outline-success">Approved</div>
+                                            {% endcomment %}
+                                        </td>
+                                        <td>
+                                            <button class="delete-user badge badge-outline-success1">
+                          <i class="icofont-trash"></i>
+                        </button> {% comment %}
+                                            <div class="badge badge-outline-success">Approved</div>
+                                            {% endcomment %}
+                                        </td>
+                                    </tr>
+                                    {% endif %} {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Supervisor</h4>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                        <th>Mobile No</th>
+                                        <th>Email ID</th>
+                                        <th>Department</th>
+                                        <th>Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %} {% if user.designation == 'Supervisor' %}
+                                    <tr>
+                                        <td hidden>{{user.id}}</td>
+                                        <td>
+                                            <span class="pl-2">{{user.name}}</span>
+                                        </td>
+                                        <td>{{user.gender}}</td>
+                                        <td>{{user.mobile}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{user.department}}</td>
+                                        <td>{{user.add_date}}</td>
+
+                                        <td>
+                                            <button class="edit-form badge badge-outline-success">
+                          <i class="icofont-edit"></i>
+                        </button> {% comment %}
+                                            <div class="badge badge-outline-success">Approved</div>
+                                            {% endcomment %}
+                                        </td>
+                                        <td>
+                                            <button class="delete-user badge badge-outline-success1">
+                          <i class="icofont-trash"></i>
+                        </button> {% comment %}
+                                            <div class="badge badge-outline-success">Approv ed</div>
+                                            {% endcomment %}
+                                        </td>
+                                    </tr>
+                                    {% endif %} {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Security</h4>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                        <th>Mobile No</th>
+                                        <th>Email ID</th>
+
+                                        <th>Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %} {% if user.designation == 'Security' %}
+                                    <tr>
+                                        <td hidden>{{user.id}}</td>
+                                        <td>
+                                            <span class="pl-2">{{user.name}}</span>
+                                        </td>
+                                        <td>{{user.gender}}</td>
+                                        <td>{{user.mobile}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{user.add_date}}</td>
+                                        <td>
+                                            <button class="edit-form badge badge-outline-success">
+                          <i class="icofont-edit"></i>
+                        </button> {% comment %}
+                                            <div class="badge badge-outline-success">Approved</div>
+                                            {% endcomment %}
+                                        </td>
+                                        <td>
+                                            <button class="delete-user badge badge-outline-success1">
+                          <i class="icofont-trash"></i>
+                        </button> {% comment %}
+                                            <div class="badge badge-outline-success">Approved</div>
+                                            {% endcomment %}
+                                        </td>
+                                    </tr>
+                                    {% endif %} {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="overlay-form d-none">
+            <!-- ======= Choice ======= -->
+            <div class="choice-con row justify-content-center">
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Select user</h4>
+                            <p class="card-description">Add new user</p>
+                            <div class="choices mt-5 row justify-content-around">
+                                <button class="pm col-2 btn btn-primary">Plant Head</button>
+                                <button class="sv col-2 btn btn-info">Supervisor</button>
+                                <button class="sc col-2 btn btn-success">Security</button>
+                                <button class="cancel col-2 btn btn-outline-danger">
+                    Cancel
+                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ======= Choice ======= -->
+
+            <!-- ======= Add New Plant Head Form ======= -->
+            <div class="pm-form row justify-content-center d-none">
+                <div class="col-8 my-5 py-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Plant head details</h4>
+                            <p class="card-description">Add new plant head</p>
+                            <form method="post" action="addplant/" id="PHForm" class="forms-sample mt-3" autocomplete="off">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="number" name="id" class="form-control" value="{{p_id}}" hidden />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Name</label>
+                                    <input type="text" name="name" class="form-control" id="exampleInputName1" placeholder="Name" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleSelectGender">Gender</label>
+                                    <select class="form-control" id="exampleSelectGender" name="gender">
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Mobile No.</label>
+                                    <input type="number" value="0" pattern="[0-9]{10}" name="mobile" class="form-control" id="exampleInputName1" min="1000000000" max="9999999999" placeholder="Mobile" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="pl-email">Email address</label>
+                                    <input type="email" name="email" class="form-control" id="pl-email" pattern="[a-z0-9]{3,}@gmail.com$" title="example@gmail.com" placeholder="Email" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="pl-pass">Password</label>
+                                    <input type="password" name="password" class="form-control" id="pl-pass" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" title="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+                                        placeholder="Password" required />
+                                </div>
+                                <div class="form-group mb-5">
+                                    <label for="exampleInputName1">Designation</label>
+                                    <input type="text" name="designation" class="form-control" id="exampleInputName1" value="Plant head" readonly />
+                                </div>
+
+                                <button class="btn btn-primary mr-2">Submit</button>
+                                <button class="btn btn-dark">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ======= Add New Plant Head Form ======= -->
+
+            <!-- ======= Add New Supervisor Form ======= -->
+            <div class="sv-form row justify-content-center d-none">
+                <div class="col-8 my-5 py-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Supervisor details</h4>
+                            <p class="card-description">Add new Supervisor</p>
+                            <form method="post" action="addsupervisor/" class="forms-sample mt-3" id="SForm" autocomplete="off">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <input type="number" name="id" class="form-control" value="{{sv_id}}" hidden />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Name</label>
+                                    <input type="text" name="name" class="form-control" id="exampleInputName1" placeholder="Name" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleSelectGender">Gender</label>
+                                    <select class="form-control" id="exampleSelectGender" name="gender">
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Mobile No.</label>
+                                    <input type="number" pattern="[0-9]{10}" min="1000000000" max="9999999999" value="0" name="mobile" class="form-control" id="exampleInputName1" placeholder="Mobile" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail3">Email address</label>
+                                    <input type="email" name="email" class="form-control" id="exampleInputEmail3" pattern="[a-z0-9]{3,}@gmail.com$" title="example@gmail.com" placeholder="Email" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword4">Password</label>
+                                    <input type="password" name="password" class="form-control" id="exampleInputPassword4" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" title="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+                                        placeholder="Password" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Designation</label>
+                                    <input type="text" name="designation" class="form-control" id="exampleInputName1" value="Supervisor" readonly />
+                                </div>
+                                <div class="form-group row">
+                                    <label for="DeptDropdown">Department</label>
+                                    <div class="dropdown col-4" id="DeptDropdown">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuOutlineButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width: 100%;"> Select Department </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuOutlineButton2" x-placement="bottom-start" style="width:100%;position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);cursor:pointer;font-size:1.2rem">
+                                            {% for department in departments %}
+                                            <li class="dropdown-item" value="{{department.dept_name}}"><strong>{{department.dept_name}}</strong></li>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text" name="department" class="form-control" id="department" placeholder="Choose..." pattern="^(?!\s*$).+" readonly required/>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary mr-2">Submit</button>
+                                <button class="btn btn-dark">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ======= Add New Supervisor Form ======= -->
+
+            <!-- ======= Add New Security Form ======= -->
+            <div class="sc-form row justify-content-center d-none">
+                <div class="col-8 my-5 py-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Security details</h4>
+                            <p class="card-description">Add new Security</p>
+                            <form method="post" action="addsecurity/" id="ScForm" class="forms-sample mt-3" autocomplete="off">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="number" name="id" class="form-control" value="{{sc_id}}" hidden />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Name</label>
+                                    <input type="text" name="name" class="form-control" id="exampleInputName1" placeholder="Name" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleSelectGender">Gender</label>
+                                    <select class="form-control" id="exampleSelectGender" name="gender">
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Mobile No.</label>
+                                    <input type="number" value="0" pattern="[0-9]{10}" name="mobile" class="form-control" id="exampleInputName1" min="1000000000" max="9999999999" placeholder="Mobile" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail3">Email address</label>
+                                    <input type="email" name="email" class="form-control" id="exampleInputEmail3" pattern="[a-z0-9]{3,}@gmail.com$" title="example@gmail.com" placeholder="Email" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword4">Password</label>
+                                    <input type="password" name="password" class="form-control" id="exampleInputPassword4" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" title="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+                                        placeholder="Password" required />
+                                </div>
+                                <div class="form-group mb-5">
+                                    <label for="exampleInputName1">Designation</label>
+                                    <input type="text" name="designation" class="form-control" id="exampleInputName1" value="Security" readonly />
+                                </div>
+
+                                <button class="btn btn-primary mr-2">Submit</button>
+                                <button class="btn btn-dark">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ======= Add New Security Form ======= -->
+        </section>
+
+        <section class="overlay-update-form d-none">
+            <!-- ======= Update Plant Head Form ======= -->
+            <div class="pm-update-form row justify-content-center d-none">
+                <div class="col-8 my-5 py-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Plant head details</h4>
+                            <p class="card-description">Update plant head</p>
+                            <form method="post" action="updateplant/" id="PHUForm" name="PHUForm" class="forms-sample mt-3" autocomplete="off">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="number" name="id" class="form-control" hidden />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Name</label>
+                                    <input type="text" name="name" class="form-control" id="exampleInputName1" placeholder="Name" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleSelectGender">Gender</label>
+                                    <select class="form-control" id="exampleSelectGender" name="gender">
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Mobile No.</label>
+                                    <input type="number" value="0" pattern="[0-9]{10}" name="mobile" class="form-control" id="exampleInputName1" min="1000000000" max="9999999999" placeholder="Mobile" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail3">Email address</label>
+                                    <input type="email" name="email" class="form-control" id="exampleInputEmail3" pattern="[a-z0-9]{3,}@gmail.com$" title="example@gmail.com" placeholder="Email" autocomplete="off" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword4">Password</label>
+                                    <input type="password" name="password" class="form-control" id="exampleInputPassword4" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" title="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+                                        placeholder="Password" />
+                                </div>
+
+                                <button type="submit" class="btn btn-primary mr-2">
+                    Submit
+                  </button>
+                                <button class="btn btn-dark">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ======= Update Plant Head Form end ======= -->
+
+            <!-- ======= update Supervisor Form ======= -->
+            <div class="sv-update-form row justify-content-center d-none">
+                <div class="col-8 my-5 py-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Supervisor details</h4>
+                            <p class="card-description">Update Supervisor</p>
+                            <form method="post" action="updatesupervisor/" class="forms-sample mt-3" id="SUForm" name="SUForm" autocomplete="off">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <input type="number" name="id" class="form-control" hidden />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Name</label>
+                                    <input type="text" name="name" class="form-control" id="exampleInputName1" placeholder="Name" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleSelectGender">Gender</label>
+                                    <select class="form-control" id="exampleSelectGender" name="gender">
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Mobile No.</label>
+                                    <input type="number" pattern="[0-9]{10}" min="1000000000" max="9999999999" value="0" name="mobile" class="form-control" id="exampleInputName1" placeholder="Mobile" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail3">Email address</label>
+                                    <input type="email" name="email" class="form-control" id="exampleInputEmail3" pattern="[a-z0-9]{3,}@gmail.com$" title="example@gmail.com" placeholder="Email" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword4">Password</label>
+                                    <input type="password" name="password" class="form-control" id="exampleInputPassword4" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" title="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+                                        placeholder="Password" />
+                                </div>
+                                <div class="form-group row">
+                                    <label for="DeptDropdown">Department</label>
+                                    <div class="dropdown col-4" id="DeptDropdown">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuOutlineButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width: 100%;"> Select Department </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuOutlineButton2" x-placement="bottom-start" style="width:100%;position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 29px, 0px);cursor:pointer;font-size:1.2rem">
+                                            {% for department in departments %}
+                                            <li class="dropdown-item" value="{{department.dept_name}}"><strong>{{department.dept_name}}</strong></li>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text" name="department" class="form-control" id="department" placeholder="Choose..." pattern="(^$)|(\s+$)" readonly required/>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary mr-2">Submit</button>
+                                <button class="btn btn-dark">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ======= Update Supervisor Form end ======= -->
+
+            <!-- ======= Update Security Form ======= -->
+            <div class="sc-update-form row justify-content-center d-none">
+                <div class="col-8 my-5 py-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Security details</h4>
+                            <p class="card-description">Update Security</p>
+                            <form method="post" action="updateplant/" id="SCUForm" name="SCUForm" class="forms-sample mt-3" autocomplete="off">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="number" name="id" class="form-control" hidden />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Name</label>
+                                    <input type="text" name="name" class="form-control" id="exampleInputName1" placeholder="Name" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleSelectGender">Gender</label>
+                                    <select class="form-control" id="exampleSelectGender" name="gender">
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Mobile No.</label>
+                                    <input type="number" value="0" pattern="[0-9]{10}" name="mobile" class="form-control" id="exampleInputName1" min="1000000000" max="9999999999" placeholder="Mobile" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail3">Email address</label>
+                                    <input type="email" name="email" class="form-control" id="exampleInputEmail3" pattern="[a-z0-9]{3,}@gmail.com$" title="example@gmail.com" placeholder="Email" required />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputPassword4">Password</label>
+                                    <input type="password" name="password" class="form-control" id="exampleInputPassword4" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" title="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+                                        placeholder="Password" />
+                                </div>
+
+                                <button class="btn btn-primary mr-2">Submit</button>
+                                <button class="btn btn-dark">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ======= Update Security Form end ======= -->
+        </section>
+
+        <section class="overlay-delete-user d-none">
+            <!-- ======= Choice ======= -->
+            <div class="choice-con row justify-content-center">
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Delete User</h4>
+                            <p class="card-description">
+                                The current user's data will be lost
+                            </p>
+                            <div class="choices-delete mt-5 row justify-content-around">
+                                <button class="confirm-delete col-3 btn btn-success">
+                    Confirm
+                  </button>
+                                <button class="cancel-delete col-3 btn btn-outline-danger">
+                    Cancel
+                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ======= Choice ======= -->
+
+            <!-- ======= Delete user form ======= -->
+            <form method="post" action="deleteuser/" class="forms-sample mt-3 d-none" id="DUForm" name="DUForm" autocomplete="off">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <input type="number" name="id" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="text" name="designation" class="form-control" id="exampleInputName1" />
+                </div>
+            </form>
+            <!-- ======= Delete user form ======= -->
+        </section>
+    </section>
+
+    <!-- Vendor JS Files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <script src="{% static 'admin_app/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'admin_app/vendor/aos/aos.js' %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'admin_app/js/admin.js' %}"></script>
+</body>
+
+</html>

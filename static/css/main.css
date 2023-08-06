@@ -1,0 +1,213 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
+:root {
+    --yellow: rgb(255, 230, 0);
+    --yd: #ffc300;
+}
+
+
+/*--------------------------------------------------------------
+  # General
+  --------------------------------------------------------------*/
+
+html {
+    font-size: 62.5%;
+}
+
+@media only screen and (max-width: 992px) {
+    html {
+        font-size: 55%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    html {
+        font-size: 45%;
+    }
+}
+
+body {
+    font-family: "raleway", sans-serif;
+}
+
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    background-color: white;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/*--------------------------------------------------------------
+  # Login Home Section
+  --------------------------------------------------------------*/
+
+#login-home {
+    position: relative;
+    width: 100wh;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#login-home::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    mix-blend-mode: overlay;
+    opacity: 0.8;
+}
+
+.form-box {
+    position: relative;
+    min-width: 48rem;
+    height: 60rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 8rem 6rem;
+    border-radius: 4rem 0rem 4rem 0rem;
+    box-shadow: 0 1.2rem 1.5rem 0 rgba(0, 0, 0, 0.24), 0 1.7rem 5rem 0 rgba(0, 0, 0, 0.19), 0 0 2rem rgba(0, 0, 0, 0.6) inset;
+    overflow: hidden;
+}
+
+.login-form-box {
+    /* margin-top: 3rem; */
+    padding: 2rem;
+}
+
+
+/* eye button */
+
+i.eye {
+    position: absolute;
+    left: 78%;
+    top: 47%;
+    font-size: 2.3rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.group {
+    margin: 3rem 0rem;
+}
+
+.group .input,
+.group .label,
+.group .button {
+    font-size: 1.6rem;
+    width: 100%;
+    color: black;
+    display: block;
+    outline: none;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+}
+
+.group .label {
+    margin-bottom: 1rem;
+}
+
+.group .input {
+    padding: 0.6rem 1rem;
+    background-color: transparent;
+    border: none;
+    border-bottom: 3px black solid;
+}
+
+.group .button {
+    margin-top: 6rem;
+    min-height: 4rem;
+    max-height: 4.2rem;
+    background-color: black;
+    font-size: 1.8rem;
+    color: white;
+    padding: auto 1rem;
+    border-radius: 3rem;
+}
+
+.fp-group p,
+.resend-text p {
+    font-size: 1.6rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.hr {
+    margin-top: 5rem;
+    width: 100%;
+    height: 1px;
+    background-color: black;
+}
+
+#otp {
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 1px;
+    text-align: center;
+    display: inline;
+    width: 50%;
+}
+
+#fp-verify-con {
+    margin-left: 3rem;
+}
+
+.fp-verify {
+    width: auto;
+    height: auto;
+    min-width: 3rem;
+    min-height: 3rem;
+    background-color: black !important;
+    color: white;
+    padding: 0.4rem 1rem;
+    border: 4px black solid;
+    margin-left: auto;
+    border-radius: 1rem 0rem 1rem 0rem;
+    font-weight: 400;
+    font-size: 1.4rem;
+}
+
+.fp-verify i {
+    color: #fff;
+    font-size: 2rem;
+}
+
+.back {
+    width: 6rem;
+    height: 3rem;
+    border-radius: 1rem;
+    font-size: 1.4rem;
+    background-color: black;
+    border: none;
+    outline: none;
+    color: #fff;
+    transition: all 0.3s linear;
+}
+
+.back:hover {
+    transform: scale(1.01);
+}
+
+.back i {
+    color: #fff;
+    font-size: 2rem;
+}

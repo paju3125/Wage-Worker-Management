@@ -1,0 +1,649 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
+:root {
+    --pink: #dd0e61;
+    --night: #127681;
+}
+
+
+/*--------------------------------------------------------------
+  # General
+  --------------------------------------------------------------*/
+
+html {
+    font-size: 62.5%;
+}
+
+@media only screen and (max-width: 992px) {
+    html {
+        font-size: 55%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    html {
+        font-size: 45%;
+    }
+}
+
+body {
+    font-family: "Raleway", sans-serif;
+    overflow: hidden;
+    background: #000;
+}
+
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(128, 128, 128, 0.5);
+}
+
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    background-color: white;
+    pointer-events: none;
+}
+
+#preloader::before {
+    content: "";
+    position: fixed;
+    top: calc(50% - 30px);
+    left: calc(50% - 30px);
+    border: 6px solid var(--pink);
+    border-top-color: white;
+    border-bottom-color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: animate-preloader1 0.6s ease-in infinite;
+    animation: animate-preloader1 0.6s ease-in infinite;
+}
+
+#preloader::after {
+    content: "";
+    position: fixed;
+    top: calc(50% - 45px);
+    left: calc(50% - 45px);
+    border: 6px solid var(--pink);
+    border-left-color: white;
+    border-right-color: white;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    -webkit-animation: animate-preloader2 0.6s linear infinite;
+    animation: animate-preloader2 0.6s linear infinite;
+}
+
+@-webkit-keyframes animate-preloader1 {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(0.7);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+@-webkit-keyframes animate-preloader2 {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes animate-preloader1 {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(0.7);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+@keyframes animate-preloader2 {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+
+::selection {
+    user-select: none;
+}
+
+#header {
+    height: 7rem;
+    display: flex;
+    justify-content: space-between;
+    background: #191c24;
+    left: 28rem !important;
+}
+
+
+/* Clock  */
+
+.clock {
+    position: absolute;
+    margin-top: 3.5rem;
+    left: 80%;
+    padding: 0rem;
+    transform: translateX(-50%) translateY(-50%);
+    color: #fff;
+    /* border-top: 2px solid #fff; */
+    border-bottom: 2px solid #fff;
+    font-size: 2.4rem;
+    font-family: Orbitron;
+    font-weight: 600;
+    letter-spacing: 3px;
+}
+
+
+/* create new project button */
+
+#header .add-new-dept,
+#header .add-new-user {
+    width: auto;
+    height: auto;
+    max-height: 3rem;
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.3rem;
+    color: white;
+    background-color: #074b0b;
+    box-shadow: inset 0px 0px 10px #4c8c4a;
+    letter-spacing: 0.1rem;
+    transition: all 0.3s linear;
+}
+
+#header .add-new-dept:hover,
+#header .add-new-user:hover {
+    transform: scale(1.1);
+}
+
+@media only screen and (max-width: 768px) {
+    .add-new-dept,
+    .add-new-user {
+        display: none;
+    }
+}
+
+#header .nav-menu {
+    background: transparent;
+    margin-left: 23rem;
+    border: none;
+    min-height: 5rem;
+    border-radius: 0;
+}
+
+.nav-menu div {
+    float: right;
+}
+
+.nav-menu ul {
+    list-style: none;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu ul li {
+    float: left;
+    display: block;
+    background-color: transparent;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    padding: 0rem 1.5rem;
+    transition: all 0.3s linear;
+}
+
+.nav-menu li.profile-dropdown {
+    position: relative;
+}
+
+.nav-menu ul>li:hover {
+    background-color: #dd0e61;
+}
+
+.nav-menu ul li i {
+    font-size: 2rem;
+    color: #fff;
+}
+
+.nav-menu ul li img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+.nav-menu ul li span {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-left: 1rem;
+    color: #fff;
+}
+
+.userprofile {
+    position: absolute;
+    display: block;
+    top: calc(100% + 3rem);
+    right: 0;
+    width: 35rem !important;
+    background-color: #222d32;
+    padding: 2rem;
+    box-shadow: 0rem 0rem 1.5rem rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.4s linear;
+}
+
+.profile-dropdown:hover .userprofile {
+    visibility: visible;
+    opacity: 1;
+    top: 100%;
+}
+
+.userprofile ul {
+    list-style: none;
+    padding: 1rem;
+    margin: 0;
+    width: 100%;
+    border: 0.2rem solid gray;
+}
+
+.userprofile ul li {
+    background-color: transparent !important;
+    margin: 1rem 0rem;
+    width: 100%;
+    text-align: center !important;
+}
+
+.userprofile ul li img {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    border: 0.4rem solid grey;
+}
+
+.userprofile ul li h4 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 0.5px;
+}
+
+.userprofile ul li button {
+    width: 100%;
+    background: #fff;
+    color: black;
+    font-size: 1.6rem;
+    font-weight: 600;
+    display: block;
+    padding: 1rem;
+    transition: all 0.4s linear;
+    outline: none;
+    border: none;
+}
+
+.userprofile ul li button i {
+    color: #000;
+}
+
+.userprofile ul li button:hover i {
+    color: #fff;
+}
+
+.userprofile ul li button:hover {
+    background: #000;
+    color: #fff;
+}
+
+.nav-menu ul li.profile-dropdown {
+    padding-right: 4rem !important;
+}
+
+
+/*--------------------------------------------------------------
+  # Vartical Navigation Bar
+  --------------------------------------------------------------*/
+
+.main-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 28rem;
+    height: auto;
+    padding-top: 1.5rem;
+    background-color: #191c24;
+    transition: all 0.4s linear;
+    z-index: 999999;
+}
+
+.main-sidebar .logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.main-sidebar .logo h3 {
+    font-size: 3rem;
+    font-weight: 600;
+    color: white;
+    text-shadow: 2px 2px 5px gold;
+}
+
+.main-sidebar .divider {
+    width: auto;
+    height: 0.5px;
+    background: gray;
+    margin: 0.5rem 1rem;
+}
+
+.main-sidebar .user-panel {
+    position: relative;
+    width: 100%;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.main-sidebar .user-panel img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.main-sidebar .user-panel .info {
+    max-width: 17rem;
+    height: auto;
+    color: white;
+    padding-left: 1rem;
+}
+
+.main-sidebar .user-panel .info h3 {
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 0.6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.main-sidebar .user-panel .info p {
+    color: #6c7293;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    padding: 0;
+    margin: 0;
+}
+
+.main-sidebar .user-panel .info p i {
+    margin-right: 0.5rem;
+    color: lightgreen;
+}
+
+
+/* .sideMenu {
+    width: 5rem;
+    height: 5rem;
+    color: white;
+    font-weight: 700;
+    font-size: 2.6rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    border-right: 1px solid #222d32;
+  } */
+
+.main-sidebar .sidebar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.main-sidebar .sidebar-menu li {
+    position: relative;
+    margin: 1rem;
+    padding: 0;
+}
+
+.main-sidebar .sidebar-menu li.header {
+    color: #6c7293;
+    margin-top: 3px;
+    padding: 1rem 2.5rem 1rem 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.main-sidebar .sidebar-menu li a {
+    background: #222d32;
+    color: lightgray;
+    border-left: 0.4rem solid transparent;
+    display: block;
+    padding: 1rem 0.5rem 1rem 1rem;
+    font-family: "raleway", sans-serif;
+    font-weight: 500;
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s linear;
+}
+
+.main-sidebar .sidebar-menu li:hover a {
+    background: #1e282c;
+    color: white;
+}
+
+.main-sidebar .sidebar-menu li.active a {
+    background: #1e282c;
+    color: white;
+    border-left-color: #e75690;
+}
+
+
+/*--------------------------------------------------------------
+# Home Section
+--------------------------------------------------------------*/
+
+.services {
+    margin: 5rem 0rem 0rem 28rem;
+    padding: 2.5rem;
+    font-family: "Rubik", sans-serif;
+}
+
+#department .heading,
+#admin-home .heading {
+    width: fit-content;
+    margin: 2rem 0rem 1rem 0rem;
+    padding-right: 2rem;
+    border-bottom: 2px solid #fff;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+.search {
+    width: 100%;
+    height: 3rem;
+    position: relative;
+    display: flex;
+}
+
+.searchTerm {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.6rem;
+    width: 100%;
+    border: 3px solid #00b4cc;
+    border-right: none;
+    padding: 5px;
+    height: 3rem;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #0f0f0f;
+}
+
+.searchButton {
+    width: 40px;
+    height: 3rem;
+    border: 1px solid #00b4cc;
+    background: #00b4cc;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+
+/* Mark entry and exit buttons */
+
+.main-sidebar .sidebar-menu li button {
+    width: 18rem;
+    height: 4rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 1rem;
+}
+
+.main-sidebar .sidebar-menu li .entry {
+    background-color: #00d25b;
+    color: #fff;
+}
+
+.main-sidebar .sidebar-menu .logout-button {
+    margin-top: 50%;
+}
+
+#checkboxNoLabel {
+    margin-top: -0.6rem;
+    width: 1.6rem;
+    height: 1.6rem;
+}
+
+.markSelected {
+    margin: 3rem;
+    float: right;
+}
+
+.markSelected button {
+    padding: 1rem;
+    font-weight: 700;
+}
+
+.navbar {
+    height: 6rem;
+}
+
+#filter {
+    margin: 5rem 0rem 0rem 28rem;
+    padding-top: 2.5rem;
+    font-family: "Rubik", sans-serif;
+}
+
+#filter .container {
+    height: 10rem;
+    margin: 4rem 0rem 0rem 4rem;
+    padding-top: 3rem;
+    background-color: #191c24;
+}
+
+#filter .container .applyFilter {
+    width: 15rem;
+    font-size: 1.6rem;
+    padding: 1rem;
+}
+
+#filter .container .removeFilter {
+    width: 15rem;
+    font-size: 1.6rem;
+    padding: 1rem;
+}
+
+#filter .dropdown button {
+    width: 15rem;
+    padding: 1rem;
+    font-size: 1.6rem;
+}
+
+#filter .dropdown-submenu {
+    position: relative;
+}
+
+#filter .dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+    padding: 1rem;
+}
+
+.inputID {
+    width: 80%;
+    height: 3rem;
+    position: relative;
+    display: flex;
+}
+
+.id {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    width: 100%;
+    border: 3px solid #4f5b62;
+    padding: 1rem;
+    height: 3rem;
+    border-radius: 5px;
+    outline: none;
+    color: #0f0f0f;
+}
+
+#home .rowCount,
+#admin-home .rowCount {
+    margin: auto;
+    padding: 1.5rem 0rem 1.5rem 5rem;
+    margin-left: 1rem;
+    font-size: 1.4rem;
+    border-radius: 4px;
+    background-color: #191c24;
+}
